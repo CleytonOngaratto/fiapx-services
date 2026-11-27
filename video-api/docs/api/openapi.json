@@ -1,0 +1,105 @@
+{
+  "openapi" : "3.1.0",
+  "paths" : {
+    "/videos" : {
+      "post" : {
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RequestUploadRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          }
+        },
+        "summary" : "Request",
+        "tags" : [ "Video Resource" ]
+      }
+    },
+    "/videos/uploaded/{ownerId}/{videoId}/{extension}" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "extension",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "ownerId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "videoId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : { }
+              }
+            }
+          }
+        },
+        "summary" : "Uploaded",
+        "tags" : [ "Video Resource" ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "RequestUploadRequest" : {
+        "type" : "object",
+        "required" : [ "ownerId", "filename", "contentType" ],
+        "properties" : {
+          "ownerId" : {
+            "type" : "string",
+            "pattern" : "\\S"
+          },
+          "filename" : {
+            "type" : "string",
+            "pattern" : "\\S"
+          },
+          "contentType" : {
+            "type" : "string",
+            "pattern" : "\\S"
+          }
+        }
+      }
+    }
+  },
+  "info" : {
+    "title" : "video-api API",
+    "version" : "1.0.0-SNAPSHOT"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8080",
+    "description" : "Auto generated value"
+  }, {
+    "url" : "http://0.0.0.0:8080",
+    "description" : "Auto generated value"
+  } ]
+}
