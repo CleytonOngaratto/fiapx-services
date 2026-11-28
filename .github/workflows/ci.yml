@@ -16,12 +16,14 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # Quando o SonarCloud entrar, estas três passam a ser fixadas por SHA completo: a regra
+      # S7637 reprova action referenciada por tag móvel e trava o build inteiro.
+      - uses: actions/checkout@v7
         with:
           # Necessário para o blame e o new-code do SonarCloud, quando ele entrar.
           fetch-depth: 0
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v6
         with:
           java-version: '25'
           distribution: temurin
@@ -37,7 +39,7 @@ jobs:
 
       - name: Upload coverage
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: jacoco
           path: '**/target/site/jacoco/'
