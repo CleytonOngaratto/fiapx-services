@@ -11,6 +11,7 @@
 
   <modules>
     <module>video-api</module>
+    <module>video-processor</module>
   </modules>
 
   <properties>
@@ -30,6 +31,7 @@
     <lombok.version>1.18.48</lombok.version>
     <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
     <s3mock-testcontainers.version>5.2.3</s3mock-testcontainers.version>
+    <amqp-client.version>5.38.0</amqp-client.version>
   </properties>
 
   <dependencyManagement>
@@ -60,6 +62,11 @@
         <artifactId>lombok</artifactId>
         <version>${lombok.version}</version>
         <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.rabbitmq</groupId>
+        <artifactId>amqp-client</artifactId>
+        <version>${amqp-client.version}</version>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
