@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: video-api
+data:
+  QUARKUS_HTTP_PORT: "{{ .Values.service.targetPort }}"
+  QUARKUS_HTTP_CORS_ORIGINS: "{{ .Values.cors.origins }}"
+
+  QUARKUS_S3_ENDPOINT_OVERRIDE: "{{ .Values.storage.endpoint }}"
+  QUARKUS_S3_PATH_STYLE_ACCESS: "true"
+  QUARKUS_S3_AWS_REGION: "{{ .Values.storage.region }}"
+  QUARKUS_S3_AWS_CREDENTIALS_TYPE: static
+  QUARKUS_S3_AWS_CREDENTIALS_STATIC_PROVIDER_ACCESS_KEY_ID: "{{ .Values.storage.accessKey }}"
+  QUARKUS_S3_AWS_CREDENTIALS_STATIC_PROVIDER_SECRET_ACCESS_KEY: "{{ .Values.storage.secretKey }}"
+  QUARKUS_S3_SYNC_CLIENT_TYPE: url
+
+  # Separado do endpoint acima de propósito: quem consome esta URL é o NAVEGADOR, que não
+  # resolve o nome interno do Service.
+  FIAPX_S3_PUBLIC_ENDPOINT: "{{ .Values.storage.publicEndpoint }}"
+  FIAPX_S3_REGION: "{{ .Values.storage.region }}"
+  FIAPX_S3_ACCESS_KEY: "{{ .Values.storage.accessKey }}"
+  FIAPX_S3_SECRET_KEY: "{{ .Values.storage.secretKey }}"
+  FIAPX_S3_BUCKET_VIDEOS: "{{ .Values.storage.bucketVideos }}"
+  FIAPX_S3_UPLOAD_TTL_SECONDS: "900"
