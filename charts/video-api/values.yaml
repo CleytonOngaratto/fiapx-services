@@ -1,0 +1,42 @@
+replicaCount: 2
+
+image:
+  repository: fiapx/video-api
+  tag: dev
+  # A imagem é carregada no daemon do nó; com Always o kubelet tentaria o registry e
+  # falharia com ImagePullBackOff.
+  pullPolicy: IfNotPresent
+
+service:
+  port: 80
+  targetPort: 8080
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 512Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 4
+  # SÓ CPU. Métrica de memória aqui trava o scale-down: a JVM cresce o heap até o teto do
+  # MaxRAMPercentage e fica lá, então a utilização nunca cai abaixo do alvo.
+  targetCPUUtilizationPercentage: 60
+
+terminationGracePeriodSeconds: 30
+preStopSleepSeconds: 5
+
+storage:
+  endpoint: http://s3:9090
+  publicEndpoint: http://localhost:9090
+  region: us-east-1
+  bucketVideos: fiapx-videos
+  accessKey: test
+  secretKey: test
+
+cors:
+  origins: http://localhost:5173,http://localhost:4173,http://localhost:8090
