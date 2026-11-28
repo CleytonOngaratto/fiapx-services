@@ -26,4 +26,4 @@ PROGRESS-FASE5.md
 .handoff/
 .secrets/
 .claude/
-build.log
+build*.log
